@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+  <h2>Edit form</h2>
+  <form action="/ChangeUser">
+    <div class="form-group">
+      <label >User Name:</label>
+      <input type="text" class="form-control" id="name" placeholder="Enter User Name" name="username" th:value="${user.username}">
+    </div>
+    <div class="form-group">
+      <label for="pwd">Password:</label>
+      <input type="text" class="form-control" id="pass" placeholder="Enter password" name="pass" th:value="${user.pass}">
+    </div>
+    
+    <input type="button" id="changeId" class="btn btn-primary" value="change">
+  </form>
+</div>
+
+<script type="text/javascript">
+// $(document).ready(function() {
+//     $("#changeId").click(function(event) {
+//     	$.post("/changeUser",
+//     			  {
+//     			    name: $("#name").val(),
+//     			    pass: $("#pass").val()
+//     			  },
+//     	 function(data, status){
+//     	  alert("Data: " + data + "\nStatus: " + status);
+//     	 });
+//     });
+// });
+var jsonObject={
+		name: $("#name").val(),
+		    pass: $("#pass").val()
+	}
+	$("#changeId").click(function(){
+		console.log("hen xui qua");
+		  $.post("/ChangeUser",jsonObject,
+		  function(data, status){
+		    console.log(data);
+		  });
+		}); 
+
+</script>
+
+</body>
+</html>

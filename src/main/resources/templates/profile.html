@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" th:href="@{/style.css}">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+</head>
+<section style="margin-left: 50px;">
+  <!--for demo wrap-->
+  <h1><b>USER</b></h1>
+  <div class="tbl-header">
+ 
+  		<table  cellpadding="0" cellspacing="0" border="2" width="400">
+	      <thead>
+	        <tr>
+	          <th>Id</th>
+	          <th>User Name</th>
+	          <th>Password</th>
+	          <th colspan="2";>Edit</th>
+	        </tr>
+	      </thead>
+	      <tbody id="table-list">
+	
+	      </tbody>
+	    </table>
+
+    
+  </div>
+<!--   <div class="tbl-content"> -->
+<!--     <table cellpadding="0" cellspacing="0" border="2" width="400"> -->
+<!--       <tbody id="table-list"> -->
+
+<!--       </tbody> -->
+<!--     </table> -->
+<!--   </div> -->
+</section>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+	$(document).on("click","#table-list button.edit_user",function() {
+		var tr = $(this).closest('tr');
+        var id = tr.find('.id').text();
+		window.location.replace("/edit/"+id);
+	});
+	$(document).on("click","#table-list button.delete-user",function() {
+		var tr = $(this).closest('tr');
+        var id = tr.find('.id').text();
+		window.location.replace("/delete/"+id);
+	});
+	$.ajax({
+		type : "GET",
+		contentType : "application/json",
+		url : "list",
+		dataType : 'json',			
+		success : function(data) {
+			console.log(data);
+			var i;
+			var result;
+			var totalResutl;	
+			for (i=0; i<data.length; i++){
+				result = "<tr><td class='id'>"+data[i].id+"</td><td class='username'>"+data[i].username+"</td><td class='password'>"+data[i].pass+"</td><td><button class='edit_user' value='"+data[i].id+"'>Edit</button></td><td><button class='delete-user' value='"+data[i].id+"'>Delete</button></td></tr>";
+				totalResutl = totalResutl+result;
+			}
+			$('#table-list').html(totalResutl);
+		}
+
+	});	
+
+});
+</script>
+</body>
+</html>
